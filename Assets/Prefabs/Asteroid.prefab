@@ -335,6 +335,7 @@ MonoBehaviour:
   target: {fileID: 0}
   desroyAnimationName: Destroy
   desroySoundName: Asteroid_Explode
+  appearSoundName: Asteroid_Appear
   rotateScript: {fileID: 8278220281250512188}
   speed: 5
   damage: 20
