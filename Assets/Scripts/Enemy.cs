@@ -17,7 +17,11 @@ public class Enemy : MonoBehaviour
  [SerializeField]
  private string desroySoundName = "Asteroid_Explode";
  [SerializeField]
- private string appearSoundName;
+ protected string appearSoundName;
+ [SerializeField]
+ protected float speed = 1f;
+ [SerializeField]
+ protected float damage = 20f;
  public Transform Target {set{target = value;}}
  protected enum State {Active, Dead}
  protected State currentState;
@@ -29,7 +33,8 @@ public class Enemy : MonoBehaviour
    }
  public virtual void OnEnable()
    {
-             
+      animator.Play("Idle", 0, 0f);
+      objectCollider.enabled = true;       
       SoundManager.instance.Play("Asteroid_Appear");
       health.InitializeHealth();
       currentState = State.Active;
