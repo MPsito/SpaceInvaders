@@ -7,16 +7,17 @@ public class Pool : MonoBehaviour
     private readonly HashSet<GameObject> activeObjects = new HashSet<GameObject>();
     public IReadOnlyCollection<GameObject> ActiveObjects => activeObjects;
     public GameObject prefab;
-    public GameObject InstantiateObject(Vector3 position,bool isTurnedOff = false)
+    public GameObject InstantiateObject(Vector3 position, bool isTurnedOff = false)
     {
         GameObject currentObject;
         if (poolStack.Count > 0)
         {
             currentObject = poolStack.Pop();
-            if (isTurnedOff)
+            if (!isTurnedOff)
             {
                 currentObject.SetActive(true);
             }
+            
             currentObject.transform.position = position;
             currentObject.transform.rotation = Quaternion.identity;
         }
@@ -34,13 +35,17 @@ public class Pool : MonoBehaviour
     }
     public GameObject InstantiateObject(Transform parent)
     {
-        return InstantiateObject(parent.position);   
+        return InstantiateObject(parent.position, false);   
     }
     public void ReturnToPool(GameObject obj)
     {
         obj.SetActive(false);
         poolStack.Push(obj);
         activeObjects.Remove(obj);
+    }
+    public void InstantiateObjectOn(Transform parent)
+    {
+        InstantiateObject(parent.position, false);
     }
     public void DeactivateAllObjects()
     {
