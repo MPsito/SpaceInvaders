@@ -46,11 +46,13 @@ public class Enemy : MonoBehaviour
    }
    private IEnumerator DestroyCoroutine()
    {
+      currentState = State.Dead;
       SoundManager.instance.Play(desroySoundName);
       onDeath?.Invoke(transform);
       objectCollider.enabled = false;
       animator.Play(desroyAnimationName, 0, 0f);
       yield return animator.WaitForCurrentAnimation();
+      onDeath.RemoveAllListeners();
       gameObject.SetActive(false);
    }
    public virtual void PositionEnemy(){}
